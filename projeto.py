@@ -8,6 +8,7 @@
 #   - quão grande é a proteína de cada vírus? (Parte 3)
 #
 # Vá preenchendo as partes abaixo, uma de cada vez.
+# Obs: Se preferir fazer esse processo num jupyter notebook, sem problemas!! Fica a critério do grupo
 
 import pandas as pd
 
@@ -34,8 +35,8 @@ print(df.head())
 # ------------------------------------------------------------------
 # Parte 2 — O conteúdo GC é aleatório?
 # ------------------------------------------------------------------
-# 1) crie a coluna "gc" com df["seq"].apply(calcular_percentual_gc)
-# 2) mostre os 10 maiores e os 10 menores GC (com o nome!)
+# 1) crie a coluna "gc" com df["sequencia"].apply(calcular_percentual_gc)
+# 2) mostre os 10 maiores e os 10 menores GC (com o nome!) -> usar função sort_values do pandas
 # 3) escreva sua conclusão sobre o padrão que observou
 
 
