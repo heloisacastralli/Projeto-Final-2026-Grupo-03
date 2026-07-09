@@ -20,8 +20,15 @@ def complementar(sequencia):
     Dica: percorra cada base da sequência e vá montando (concatenando)
     a sequência complementar numa nova string.
     """
-    raise NotImplementedError("Implemente a função complementar")
+    
+    seq_complementar = ''
 
+    sequencia = sequencia.upper().strip()
+    
+    for base in sequencia:
+        seq_complementar += (CONVERSOR_DE_BASE[base])
+    
+    return seq_complementar
 
 def complementar_reversa(sequencia):
     """
@@ -32,8 +39,17 @@ def complementar_reversa(sequencia):
     Dica: é o complementar "de trás para frente". Você pode reaproveitar
     a função complementar() que acabou de escrever e depois inverter o
     resultado (lembre-se do truque de fatiamento [::-1]).
-    """
-    raise NotImplementedError("Implemente a função complementar_reversa")
+    """    
+    seq_complementar = ''
+
+    sequencia = sequencia.upper().strip()
+
+    for base in sequencia:
+        seq_complementar += (CONVERSOR_DE_BASE[base])
+    
+    seq_complementar_reversa = seq_complementar[::-1]
+
+    return seq_complementar_reversa
 
 
 def transcrever(sequencia):
@@ -44,7 +60,23 @@ def transcrever(sequencia):
 
     Dica: na transcrição, a base T (timina) vira U (uracila).
     """
-    raise NotImplementedError("Implemente a função transcrever")
+    sequencia = sequencia.upper().strip()
+
+    dict_bases_nitrogenadas_rna = {
+        'A':'U',
+        'T':'A',
+        'C':'G',
+        'G':'C'
+        }
+    
+    transcrito = ''
+
+    sequencia = sequencia.upper()
+
+    for base in sequencia:
+        transcrito += (dict_bases_nitrogenadas_rna[base])
+
+    return transcrito
 
 
 
@@ -58,7 +90,19 @@ def calcular_percentual(sequencia, bases):
     Dica: conte quantas bases da sequência estão dentro da lista "bases" e
     divida pelo tamanho total da sequência.
     """
-    raise NotImplementedError("Implemente a função calcular_percentual")
+    sequencia = sequencia.upper().strip()
+    dict_bases = {}
+
+    for base in bases:
+        dict_bases[base] = 0
+
+    for base in bases:
+        for base_seq in sequencia:
+            if base_seq == base:
+                dict_bases[base] += 1
+
+    for base in bases:
+        print(f'{base.upper()}: {round((dict_bases[base]/len(sequencia))*100):.1f}%')
 
 
 def calcular_percentual_gc(sequencia):
@@ -84,7 +128,19 @@ def contar_bases(sequencia):
     conforme percorre cada base da sequência. (Isso vai ser bem útil no
     exercício de pandas!)
     """
-    raise NotImplementedError("Implemente a função contar_bases")
+    sequencia = sequencia.upper().strip()
+
+    dict_bases = {
+        'A':0,
+        'T':0,
+        'C':0,
+        'G':0
+    }
+
+    for base in sequencia:
+        dict_bases[base] += 1
+
+    return dict_bases
 
 
 def encontrar_inicio(sequencia):
@@ -105,7 +161,11 @@ def encontrar_inicio(sequencia):
     Dica: as strings têm um método .find("ATG") que devolve a posição do
     primeiro "ATG" (ou -1 se não encontrar). A partir daí, use fatiamento.
     """
-    raise NotImplementedError("Implemente a função encontrar_inicio")
+    sequencia = sequencia.upper().strip()
+
+    primeiro_atg = sequencia.find('ATG')
+
+    return sequencia[primeiro_atg: ]
 
 
 def traduzir(sequencia, parar=False):
@@ -131,4 +191,26 @@ def traduzir(sequencia, parar=False):
         from bio.constantes import DNA_PARA_AMINOACIDO, DNA_STOP_CODONS
     Dica: para pegar as trincas, o passo do range pode ser 3 -> range(0, len, 3).
     """
-    raise NotImplementedError("Implemente a função traduzir")
+
+    sequencia = sequencia.upper().strip()
+    sequencia = encontrar_inicio(sequencia)
+    
+    trincas = []
+    proteina = ''
+
+    for i in range(0, len(sequencia), 3):
+        trinca = sequencia[i:i+3]
+        trincas.append(trinca)
+
+    for trinca in trincas:
+        if trinca in DNA_STOP_CODONS:
+            if parar == True:
+                return proteina
+            else:
+                proteina += '*'
+        elif trinca not in DNA_PARA_AMINOACIDO.keys() and trinca not in DNA_STOP_CODONS:
+            proteina += 'X'
+        else:
+            proteina += DNA_PARA_AMINOACIDO[trinca]
+    
+    return proteina      
