@@ -91,18 +91,14 @@ def calcular_percentual(sequencia, bases):
     divida pelo tamanho total da sequência.
     """
     sequencia = sequencia.upper().strip()
-    dict_bases = {}
+    
+    contador_bases = 0
 
-    for base in bases:
-        dict_bases[base] = 0
+    for base in sequencia:
+        if base in bases:
+            contador_bases += 1
 
-    for base in bases:
-        for base_seq in sequencia:
-            if base_seq == base:
-                dict_bases[base] += 1
-
-    for base in bases:
-        print(f'{base.upper()}: {round((dict_bases[base]/len(sequencia))*100):.1f}%')
+    return round(contador_bases/len(sequencia), 2)
 
 
 def calcular_percentual_gc(sequencia):
@@ -115,6 +111,7 @@ def calcular_percentual_gc(sequencia):
     já vem pronta com as bases "G" e "C", assim dá pra usar direto com
     df["sequencia"].apply(calcular_percentual_gc), sem precisar de lambda.
     """
+
     return calcular_percentual(sequencia, ["G", "C"])
 
 
