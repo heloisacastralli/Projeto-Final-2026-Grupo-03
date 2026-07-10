@@ -44,10 +44,12 @@ df['gc'] = df['sequencia'].apply(calcular_percentual_gc)
 # 2) mostre os 10 maiores e os 10 menores GC (com o nome!) -> usar função sort_values do pandas
 
 # 10 maiores conteúdos GC
-df.sort_values(by='gc', ascending=False)[['nome', 'gc']].head(10)
+print('\n10 maiores conteúdos GC')
+print(df.sort_values(by='gc', ascending=False)[['nome', 'gc']].head(10))
 
 # 10 menores conteúdos GC
-df.sort_values(by='gc', ascending=True)[['nome', 'gc']].head(10)
+print('\n10 menores conteúdos GC')
+print(df.sort_values(by='gc', ascending=True)[['nome', 'gc']].head(10))
 
 # 3) escreva sua conclusão sobre o padrão que observou
 
@@ -62,7 +64,7 @@ df['proteina'] = df['sequencia'].apply(lambda seq: traduzir(encontrar_inicio(seq
 
 # 2) coluna "tamanho_proteina": len da proteína
 
-df['tamanho_proteina'] = df['proteina'].apply(lambda proteina:len(proteina))
+df['tamanho_proteina'] = df['proteina'].apply(len)
 
 # 3) coluna "cobertura": (tamanho_proteina * 3) / tamanho
 
