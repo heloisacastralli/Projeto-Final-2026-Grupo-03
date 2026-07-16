@@ -20,7 +20,12 @@ def complementar(sequencia):
     Dica: percorra cada base da sequência e vá montando (concatenando)
     a sequência complementar numa nova string.
     """
-    raise NotImplementedError("Implemente a função complementar")
+  sequencia_complementar = ""
+
+    for base in sequencia:
+        sequencia_complementar += CONVERSOR_DE_BASE.get(base, base)
+
+    return sequencia_complementar
 
 
 def complementar_reversa(sequencia):
@@ -33,7 +38,9 @@ def complementar_reversa(sequencia):
     a função complementar() que acabou de escrever e depois inverter o
     resultado (lembre-se do truque de fatiamento [::-1]).
     """
-    raise NotImplementedError("Implemente a função complementar_reversa")
+    sequencia_complementar = complementar(sequencia)
+
+    return sequencia_complementar[::-1]
 
 
 def transcrever(sequencia):
@@ -44,7 +51,7 @@ def transcrever(sequencia):
 
     Dica: na transcrição, a base T (timina) vira U (uracila).
     """
-    raise NotImplementedError("Implemente a função transcrever")
+     return sequencia.replace("T", "U")
 
 
 
@@ -58,7 +65,16 @@ def calcular_percentual(sequencia, bases):
     Dica: conte quantas bases da sequência estão dentro da lista "bases" e
     divida pelo tamanho total da sequência.
     """
-    raise NotImplementedError("Implemente a função calcular_percentual")
+   if len(sequencia) == 0:
+        return 0.0
+
+    quantidade = 0
+
+    for base in sequencia:
+        if base in bases:
+            quantidade += 1
+
+    return quantidade / len(sequencia)
 
 
 def calcular_percentual_gc(sequencia):
@@ -84,7 +100,18 @@ def contar_bases(sequencia):
     conforme percorre cada base da sequência. (Isso vai ser bem útil no
     exercício de pandas!)
     """
-    raise NotImplementedError("Implemente a função contar_bases")
+    contagens = {
+        "A": 0,
+        "T": 0,
+        "C": 0,
+        "G": 0,
+    }
+
+    for base in sequencia:
+        if base in contagens:
+            contagens[base] += 1
+
+    return contagens
 
 
 def encontrar_inicio(sequencia):
@@ -105,7 +132,12 @@ def encontrar_inicio(sequencia):
     Dica: as strings têm um método .find("ATG") que devolve a posição do
     primeiro "ATG" (ou -1 se não encontrar). A partir daí, use fatiamento.
     """
-    raise NotImplementedError("Implemente a função encontrar_inicio")
+    posicao_inicio = sequencia.find("ATG")
+
+    if posicao_inicio == -1:
+        return ""
+
+    return sequencia[posicao_inicio:]
 
 
 def traduzir(sequencia, parar=False):
@@ -131,4 +163,19 @@ def traduzir(sequencia, parar=False):
         from bio.constantes import DNA_PARA_AMINOACIDO, DNA_STOP_CODONS
     Dica: para pegar as trincas, o passo do range pode ser 3 -> range(0, len, 3).
     """
-    raise NotImplementedError("Implemente a função traduzir")
+    proteina = ""
+
+    # len(sequencia) - 2 evita tentar traduzir uma trinca incompleta.
+    for posicao in range(0, len(sequencia) - 2, 3):
+        codon = sequencia[posicao:posicao + 3]
+
+        if codon in DNA_STOP_CODONS:
+            if parar:
+                break
+
+            proteina += "*"
+        else:
+            aminoacido = DNA_PARA_AMINOACIDO.get(codon, "X")
+            proteina += aminoacido
+
+    return proteina
