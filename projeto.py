@@ -114,6 +114,9 @@ cobertura_mediana = df["cobertura"].median()
 print("\nCobertura mediana:")
 print(cobertura_mediana)
 
+#Descrição dos dados relacionados à cobertura
+df["cobertura"].describe()
+
 # Conclusão:
 # A cobertura mediana foi de aproximadamente 0.93 (93% do genoma).
 # Isso indica que, para a maioria dos vírus, a poliproteína ocupa quase
