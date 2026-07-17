@@ -166,16 +166,24 @@ def traduzir(sequencia, parar=False):
     proteina = ""
 
     # len(sequencia) - 2 evita tentar traduzir uma trinca incompleta.
-    for posicao in range(0, len(sequencia) - 2, 3):
-        codon = sequencia[posicao:posicao + 3]
+    sequencia = encontrar_inicio(sequencia)
+    
+    trincas = []
+    proteina = ''
 
-        if codon in DNA_STOP_CODONS:
-            if parar:
-                break
+    for i in range(0, len(sequencia), 3):
+        trinca = sequencia[i:i+3]
+        trincas.append(trinca)
 
-            proteina += "*"
+    for trinca in trincas:
+        if trinca in DNA_STOP_CODONS:
+            if parar == True:
+                return proteina
+            else:
+                proteina += '*'
+        elif trinca not in DNA_PARA_AMINOACIDO.keys() and trinca not in DNA_STOP_CODONS:
+            proteina += 'X'
         else:
-            aminoacido = DNA_PARA_AMINOACIDO.get(codon, "X")
-            proteina += aminoacido
-
+            proteina += DNA_PARA_AMINOACIDO[trinca]
+    
     return proteina
