@@ -70,12 +70,22 @@ print(df[["nome", "gc"]].tail(10))
 
 
 # Modifica a sequência para começar no primeiro códon ATG
-df["sequencia"] = df["sequencia"].apply(encontrar_inicio)
+#df["sequencia"] = df["sequencia"].apply(encontrar_inicio)
 
 # Traduz a sequência e para no primeiro stop codon
-df["proteina"] = df["sequencia"].apply(
+#df["proteina"] = df["sequencia"].apply(
     lambda sequencia: traduzir(sequencia, parar=True)
-)
+#)
+
+
+
+df["proteina"] = df["sequencia"].apply(
+    lambda sequencia: #cria funcao que recebe uma sequencia e esta função faz:
+    traduzir(encontrar_inicio(sequencia), parar=True)) # encontra o início da sequencia e traduz a sequencia a partir do ATG, parando no stopcodon
+df.head()
+
+
+
 
 # Calcula o número de aminoácidos da proteína
 df["tamanho_proteina"] = df["proteina"].apply(len)
