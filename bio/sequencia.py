@@ -176,14 +176,17 @@ def traduzir(sequencia, parar=False):
         trincas.append(trinca)
 
     for trinca in trincas:
+        if len(trinca) < 3:
+            break
+
         if trinca in DNA_STOP_CODONS:
             if parar == True:
                 return proteina
             else:
                 proteina += '*'
-        elif trinca not in DNA_PARA_AMINOACIDO.keys() and trinca not in DNA_STOP_CODONS:
-            proteina += 'X'
-        else:
+        elif trinca in DNA_PARA_AMINOACIDO.keys():
             proteina += DNA_PARA_AMINOACIDO[trinca]
+        else:
+            proteina += 'X'
     
     return proteina
